@@ -69,7 +69,7 @@ namespace Ecommerce
                     );
                 });
 
-            //   endpoints.MapRazorPages();
+            //  endpoints.MapRazorPages();
            // });
         }
     }
