@@ -27,6 +27,21 @@ namespace Ecommerce
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+
+            //Adding AddSession
+
+            services.AddSession(options =>
+            {
+                // Set a short timeout for easy testing.
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                //options.Cookie.HttpOnly = true;
+                // Make the session cookie essential
+                options.Cookie.IsEssential = true;
+            });
+
+
+            //========
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
@@ -54,6 +69,12 @@ namespace Ecommerce
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+
+            //adding use Session
+            app.UseSession();
+            //=======
+
+
             app.UseRouting();
 
             app.UseAuthentication();
@@ -61,13 +82,31 @@ namespace Ecommerce
 
 
 
-                app.UseEndpoints(endpoints =>
-                {
-                    endpoints.MapControllerRoute(
-                      name: "areas",
-                      pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}"
-                    );
-                });
+
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapRazorPages();
+
+                endpoints.MapControllerRoute(
+                    name: "areas",
+                    pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller}/{action=Index}/{id?}");
+
+            });
+
+
+
+            //app.UseEndpoints(endpoints =>
+            //    {
+            //        endpoints.MapControllerRoute(
+            //          name: "areas",
+            //          pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}"
+            //        );
+            //    });
 
             //  endpoints.MapRazorPages();
            // });

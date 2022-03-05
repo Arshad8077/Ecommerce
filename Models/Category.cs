@@ -2,15 +2,15 @@
 
 namespace Ecommerce.Models
 {
-    public class ProductTypes
-    {
+    public class Category
 
-        
+    {
+        [Key]
         public int Id { get; set; }
 
 
         [Required]
-        [Display(Name ="Product Type")]
+        [Display(Name = "Product Type")]
         public string ProductType { get; set; }
     }
 }
